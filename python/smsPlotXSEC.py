@@ -24,6 +24,9 @@ class smsPlotXSEC(smsPlotABS):
         self.histo.GetZaxis().SetTitleFont(42)
         self.histo.GetZaxis().SetLabelSize(0.035)
         self.histo.GetZaxis().SetTitleSize(0.035)
+        print "Model: {:s}".format(self.model.label)
+        print " Min mu value: {:8.4f}".format(self.histo.GetMinimum(1.e-6))
+        print " Max mu value: {:8.4f}".format(self.histo.GetMaximum())
         self.histo.SetMinimum(self.model.Zmin)
         self.histo.SetMaximum(self.model.Zmax)
 
