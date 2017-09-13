@@ -16,8 +16,9 @@ class sms():
         if modelname.find("T2mixed") != -1: self.T2mixed()
         if modelname.find("T2-4bd") != -1: self.T24bd()
         if modelname.find("T2bb") != -1: self.T2bb()
-        if modelname.find("T2qq") != -1: self.T2qq()
-        if modelname.find("T2qqDegen") != -1: self.T2qqDegen()
+        if modelname.find("T2qqOne") != -1: self.T2qqOne()
+        elif modelname.find("T2qqDegen") != -1: self.T2qqDegen()
+        elif modelname.find("T2qq") != -1: self.T2qq()
         if modelname.find("T2tb") != -1: self.T2tb()
         if modelname.find("T2bW-X05") != -1: self.T2bW_X05()
         if modelname.find("T1qqqqLL0p001") != -1: self.T1qqqqLL0p001()
@@ -40,11 +41,11 @@ class sms():
         self.label2= "";
         # scan range to plot
         self.Xmin = 600.
-        self.Xmax = 2200.
+        self.Xmax = 2000.
         self.Ymin = 0.
-        self.Ymax = 1900.
+        self.Ymax = 1800.
         self.Zmin = 0.001
-        self.Zmax = 2.
+        self.Zmax = 3.
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
@@ -69,7 +70,7 @@ class sms():
         self.Ymin = 0
         self.Ymax = 1900
         self.Zmin = 0.001
-        self.Zmax = 2.
+        self.Zmax = 3.
         # produce sparticle
         self.sParticle = "m_{#tilde{g}} [GeV]"
         # LSP
@@ -94,7 +95,7 @@ class sms():
         self.Ymin = 0.
         self.Ymax = 2000.
         self.Zmin = 0.001
-        self.Zmax = 2.
+        self.Zmax = 3.
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
@@ -120,21 +121,21 @@ class sms():
         self.Ymin = 0.
         self.Ymax = 800.
         self.Zmin = 0.001
-        self.Zmax = 100.
+        self.Zmax = 200.
         #self.Ndivisions = -1005
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{t}}}} [GeV]"
         # LSP
         self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
         # turn off diagonal lines
-        self.diagOn = True
+        self.diagOn = False
         self.diagTopOn = True
         self.blankTopCorr = True
         self.diagWOn = False
         # more specs on the text
-        self.xTextTop = 0.38
-        self.yTextTop = 0.50
-        self.angleTextTop = 61
+        self.xTextTop = 0.48
+        self.yTextTop = 0.60
+        self.angleTextTop = 56
 
     def T2cc(self):
         # model name
@@ -145,12 +146,12 @@ class sms():
         self.label= "pp #rightarrow #tilde{t}_{1} #tilde{t}_{1}, #tilde{t}_{1} #rightarrow c #tilde{#chi}^{0}_{1}";
         self.label2= "";
         # plot boundary. The top 1/4 of the y axis is taken by the legend
-        self.Xmin = 250.
-        self.Xmax = 800.
-        self.Ymin = 175.
+        self.Xmin = 150.
+        self.Xmax = 750.
+        self.Ymin = 0.
         self.Ymax = 950.
-        self.Zmin = 0.1
-        self.Zmax = 5.
+        self.Zmin = 0.001#0.1
+        self.Zmax = 200.#10.
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{t}}}} [GeV]"
         # LSP
@@ -161,9 +162,9 @@ class sms():
         self.blankTopCorr = False
         self.diagWOn = True
         # more specs on the text
-        self.xTextW = 0.50
-        self.yTextW = 0.38
-        self.angleTextW = 33
+        self.xTextW = 0.24
+        self.yTextW = 0.25
+        self.angleTextW = 35
 
     def T2bb(self):
         # model name
@@ -179,7 +180,7 @@ class sms():
         self.Ymin = 0.
         self.Ymax = 900.
         self.Zmin = 0.001
-        self.Zmax = 20.
+        self.Zmax = 200.#20.
         self.Ndivisions = -505
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{b}}}} [GeV]"
@@ -190,33 +191,6 @@ class sms():
         self.diagTopOn = False
         self.blankTopCorr = False
         self.diagWOn = False
-
-#    def T2qq(self):
-#        # model name
-#        self.modelname = "T2qq"
-#        self.color = rt.kGreen+3
-#        # decay chain
-#        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-#        self.label= "pp #rightarrow #tilde{q}_{1} #tilde{q}_{1}, #tilde{q}_{1} #rightarrow q #tilde{#chi}^{0}_{1}";
-#        self.label2= "";
-#        # plot boundary. The top 1/4 of the y axis is taken by the legend
-#        self.Xmin = 300.
-#        self.Xmax = 1700.
-#        self.Ymin = 0.
-#        self.Ymax = 1300.
-#        self.Zmin = 0.001
-#        self.Zmax = 5.
-#        # produce sparticle
-#        self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{q}}}} [GeV]"
-#        # LSP
-#        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
-#        # turn off diagonal lines
-#        self.diagOn = False
-#        self.diagTopOn = False
-#        self.blankTopCorr = False
-#        self.diagWOn = False
-#        self.textT2qqOne = True
-#        self.textT2qqEight = True
 
     def T2qq(self):
         # model name
@@ -232,7 +206,7 @@ class sms():
         self.Ymin = 0.
         self.Ymax = 1300.
         self.Zmin = 0.001
-        self.Zmax = 5.
+        self.Zmax = 200.#10.
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{q}}}} [GeV]"
         # LSP
@@ -243,32 +217,19 @@ class sms():
         self.blankTopCorr = False
         self.diagWOn = False
         self.textT2qqOne = True
+        self.textT2qqEight = True
+
+    def T2qqOne(self):
+        self.T2qq()
+        self.modelname = "T2qqOne"
+        self.color = rt.kGreen
+        self.textT2qqOne = True
         self.textT2qqEight = False
 
     def T2qqDegen(self):
-        # model name
+        self.T2qq()
         self.modelname = "T2qqDegen"
         self.color = rt.kGreen+3
-        # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1} (#tilde{q} = #tilde{Q})";
-        self.label2= "";
-        # plot boundary. The top 1/4 of the y axis is taken by the legend
-        self.Xmin = 300.
-        self.Xmax = 1700.
-        self.Ymin = 0.
-        self.Ymax = 1300.
-        self.Zmin = 0.001
-        self.Zmax = 5.
-        # produce sparticle
-        self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{q}}}} [GeV]"
-        # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
-        # turn off diagonal lines
-        self.diagOn = False
-        self.diagTopOn = False
-        self.blankTopCorr = False
-        self.diagWOn = False
         self.textT2qqOne = False
         self.textT2qqEight = True
 
