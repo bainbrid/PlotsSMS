@@ -185,21 +185,22 @@ class smsPlotABS(object):
 
         if getattr(self.model,"textT2qqOne",False):
             # LABEL T2qq single-squark degeneracy
-            textOneSq = rt.TLatex(0.28,0.35,"one light #tilde{q}")
+            #textOneSq = rt.TLatex(0.22,0.29,"#tilde{u}_{L}")
+            textOneSq = rt.TLatex(0.19,0.20,"one light #tilde{q}")
             textOneSq.SetNDC()
             textOneSq.SetTextAlign(13)
-            textOneSq.SetTextFont(62)
-            textOneSq.SetTextSize(0.034)
+            textOneSq.SetTextFont(42)
+            textOneSq.SetTextSize(0.03)
             textOneSq.Draw()
             self.c.textOneSq = textOneSq
 
         if getattr(self.model,"textT2qqEight",False):
             # LABEL T2qq single-squark degeneracy
-            textEightSq = rt.TLatex(0.54,0.58,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
+            textEightSq = rt.TLatex(0.44,0.64,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u}, #tilde{d}, #tilde{s}, #tilde{c})")
             textEightSq.SetNDC()
             textEightSq.SetTextAlign(13)
-            textEightSq.SetTextFont(62)
-            textEightSq.SetTextSize(0.034)
+            textEightSq.SetTextFont(42)
+            textEightSq.SetTextSize(0.03)
             textEightSq.Draw()
             self.c.textEightSq = textEightSq
 
