@@ -117,7 +117,7 @@ class ContPlotCollection():
 
         for iM,model in enumerate(self.uniqueModelList):
             yoffset = -(yRange/self.labelOffset)*int(iM%self.nmodels)
-            xoffset = int(iM/self.nmodels)*0.3*yRange
+            xoffset = int(iM/self.nmodels)*0.5*xRange
 
             LObs = rt.TGraph(2)
             LObs.SetName("LObs")
