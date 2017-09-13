@@ -41,9 +41,9 @@ class sms():
         self.label2= "";
         # scan range to plot
         self.Xmin = 600.
-        self.Xmax = 2000.
+        self.Xmax = 2200.
         self.Ymin = 0.
-        self.Ymax = 1800.
+        self.Ymax = 1900.
         self.Zmin = 0.001
         self.Zmax = 3.
         # produce sparticle
@@ -198,7 +198,7 @@ class sms():
         self.color = rt.kGreen
         # decay chain
         lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1} (#tilde{q} = #tilde{u}_{L})";
+        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}";
         self.label2= "";
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 300.
@@ -223,6 +223,8 @@ class sms():
         self.T2qq()
         self.modelname = "T2qqOne"
         self.color = rt.kGreen
+        tmp = " (#tilde{q}_{L} + #tilde{q}_{R}, #tilde{u}, #tilde{d}, #tilde{s}, #tilde{c})"
+        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}"+tmp;
         self.textT2qqOne = True
         self.textT2qqEight = False
 
@@ -230,6 +232,8 @@ class sms():
         self.T2qq()
         self.modelname = "T2qqDegen"
         self.color = rt.kGreen+3
+        tmp = " (one light #tilde{q})"
+        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}"+tmp;
         self.textT2qqOne = False
         self.textT2qqEight = True
 
