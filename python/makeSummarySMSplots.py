@@ -4,15 +4,17 @@ from inputFile import *
 from smsPlotXSEC import *
 from smsPlotCONT import *
 from smsPlotBrazil import *
+
 class ContPlotCollection():
     def __init__(self,modelNames,modelType,transpose=False,name = None):
         self.modelNames = modelNames
+        lsp = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
+        label = "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+lsp
         modelTypeDict = {
-                "gluino":"pp #rightarrow #tilde{g} #tilde{g}",\
-                "mix":"pp #rightarrow #tilde{g} #tilde{g} / #tilde{q} #tilde{q}",\
-                "squark":"pp #rightarrow #tilde{q} #tilde{q}",\
-                "stop":"pp #rightarrow #tilde{t} #tilde{t} / #tilde{b} #tilde{b}"
-                }
+            "gluino":"pp #rightarrow #tilde{g} #tilde{g}",
+            "squark":"pp #rightarrow #tilde{q} #tilde{q}",
+            "split":label
+            }
         if modelType not in modelTypeDict:
             raise AttributeError, "Unsupported model type: "+modelType
         self.modelType = modelType
@@ -20,8 +22,8 @@ class ContPlotCollection():
         self.labelOffset = 17.
         self.transpose = transpose
         self.name = name
-
         self.contPlotDict = {}
+
     def setContPlots(self,filenameTemplate):
         self.models = []
         for modelname in self.modelNames:
@@ -29,7 +31,7 @@ class ContPlotCollection():
             if modelname != self.modelNames[0]:
                 makeHisto = False
             # read the config file
-            fileIN = inputFile(filenameTemplate.format(modelname.replace("T2qqDegen","T2qq")),self.transpose)
+            fileIN = inputFile(filenameTemplate.format(modelname),transpose=self.transpose) #.replace("T2qqDegen","T2qq")
             contPlot = smsPlotCONT(modelname, fileIN.HISTOGRAM, fileIN.OBSERVED, fileIN.EXPECTED, fileIN.ENERGY, fileIN.LUMI, 
                     fileIN.PRELIMINARY, "CONT",makeHisto)
             self.contPlotDict[modelname] = contPlot
@@ -39,6 +41,7 @@ class ContPlotCollection():
             self.models.append(contPlot.model)
         self.getRanges()
         self.setStandard()
+
     def setStandard(self): 
         self.preliminary = self.contPlotDict[self.modelNames[0]].preliminary
         self.lumi = self.contPlotDict[self.modelNames[0]].lumi
@@ -50,6 +53,9 @@ class ContPlotCollection():
         for model in self.models:
             if not any([model.modelname == x.modelname for x in self.uniqueModelList]):
                 self.uniqueModelList.append(model)
+        self.nmodels = 0
+        if self.modelType == "split" : self.nmodels = (len(self.uniqueModelList)+1)/2
+        else : self.nmodels = len(self.uniqueModelList)
 
     def getRanges(self):
         Xmin,Ymin,Xmax,Ymax = 1E7,1E7,-1,-1
@@ -63,45 +69,42 @@ class ContPlotCollection():
         self.Xmax = Xmax
         self.Ymax = Ymax
         print self.name
-        if self.name == "mix":
-            self.Xmin = 400
-            self.Xmax = 1600
-            self.Ymin = 0
-            self.Ymax = 1400
-        elif self.name == "gluino":
+        if self.name == "gluino":
             self.Xmin = 600
-            self.Xmax = 1800
+            self.Xmax = 2300
             self.Ymin = 0
-            self.Ymax = 1600
-        elif self.name == "naturalWT1":
-            self.Xmin = 600
-            self.Xmax = 1500
-            self.Ymin = 0
-            self.Ymax = 1400
-        elif self.name == "natural":
-            self.Xmin = 600
+            self.Ymax = 2000
+        elif self.name == "squark":
+            self.Xmin = 0
             self.Xmax = 1500
             self.Ymin = 0
             self.Ymax = 1300
-        elif self.name == "allThirdGen":
-            self.Xmin = 100
-            self.Xmax = 900
+        elif self.name == "split":
+            self.Xmin = 600
+            self.Xmax = 2000
             self.Ymin = 0
-            self.Ymax = 900
+            self.Ymax = 2200
         if self.transpose:
-            self.Ymin = 0
-            if self.name == "allThirdGen":
-                # self.Ymax = 600
-                self.Ymax = self.Xmax*1.8
-            elif self.name == "mix" or "natural" in self.name:
-                self.Ymax = 2000
-            elif self.name == "allThirdGenZoom":
-                self.Xmin = 100
-                self.Xmax = 700
-                self.Ymax = 700
-            else:
-                self.Ymax = 2200
-
+            if self.name == "gluino":
+                self.Xmin = 600
+                self.Xmax = 2300
+                self.Ymin = 0
+                self.Ymax = 3400
+            elif self.name == "squark":
+                self.Xmin = 0
+                self.Xmax = 1500
+                self.Ymin = 0
+                self.Ymax = 2600
+            elif self.name == "squarkZoom":
+                self.Xmin = 0
+                self.Xmax = 1000
+                self.Ymin = 0
+                self.Ymax = 800
+            elif self.name == "split":
+                self.Xmin = 600
+                self.Xmax = 2000
+                self.Ymin = 0
+                self.Ymax = 3200
 
     def DrawLegend(self):
         LObsList = []
@@ -112,10 +115,10 @@ class ContPlotCollection():
         seenT2qq = False
         iM = 0
 
-
         for iM,model in enumerate(self.uniqueModelList):
-            offset = -(yRange/self.labelOffset)*iM
-            
+            yoffset = -(yRange/self.labelOffset)*int(iM%self.nmodels)
+            xoffset = int(iM/self.nmodels)*0.3*yRange
+
             LObs = rt.TGraph(2)
             LObs.SetName("LObs")
             LObs.SetTitle("LObs")
@@ -123,12 +126,16 @@ class ContPlotCollection():
             LObs.SetLineStyle(1)
             LObs.SetLineWidth(4)
             LObs.SetMarkerStyle(20)
-            LObs.SetPoint(0,self.Xmin+3*xRange/100, self.Ymax-1.35*yRange/10+offset)
-            LObs.SetPoint(1,self.Xmin+10*xRange/100, self.Ymax-1.35*yRange/10+offset)
+            LObs.SetPoint(0,self.Xmin+3*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
+            LObs.SetPoint(1,self.Xmin+10*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
             if model.label2 != "":
-                textObs = rt.TLatex(self.Xmin+11*xRange/100, self.Ymax-1.50*yRange/10+offset, model.label+"  ("+model.label2+")")
+                textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
+                                    self.Ymax-1.50*yRange/10+yoffset, 
+                                    model.label+"  ("+model.label2+")")
             else:
-                textObs = rt.TLatex(self.Xmin+11*xRange/100, self.Ymax-1.50*yRange/10+offset, model.label)
+                textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
+                                    self.Ymax-1.50*yRange/10+yoffset, 
+                                    model.label)
             textObs.SetTextFont(42)
             textObs.SetTextSize(0.030)
             textObs.Draw()
@@ -141,8 +148,8 @@ class ContPlotCollection():
             LExp.SetLineStyle(7)
             LExp.SetLineWidth(4)
             LExp.SetMarkerStyle(20)
-            LExp.SetPoint(0,self.Xmin+3*xRange/100, self.Ymax-1.20*yRange/10+offset)
-            LExp.SetPoint(1,self.Xmin+10*xRange/100, self.Ymax-1.20*yRange/10+offset)
+            LExp.SetPoint(0,self.Xmin+3*xRange/100+xoffset, self.Ymax-1.20*yRange/10+yoffset)
+            LExp.SetPoint(1,self.Xmin+10*xRange/100+xoffset, self.Ymax-1.20*yRange/10+yoffset)
 
             LObs.Draw("LSAME")
             LExp.Draw("LSAME")
@@ -150,7 +157,7 @@ class ContPlotCollection():
             LObsList.append(LObs)
             LExpList.append(LExp)
 
-        offset = -(-1.6)*(yRange/self.labelOffset)
+        yoffset = -(-1.6)*(yRange/self.labelOffset)
         LObs= rt.TGraph(2)
         LObs.SetName("LObs")
         LObs.SetTitle("LObs")
@@ -158,17 +165,17 @@ class ContPlotCollection():
         LObs.SetLineStyle(7)
         LObs.SetLineWidth(4)
         LObs.SetMarkerStyle(20)
-        LObs.SetPoint(0,self.Xmin+74*xRange/100, self.Ymax-1.35*yRange/10+offset)
-        LObs.SetPoint(1,self.Xmin+81*xRange/100, self.Ymax-1.35*yRange/10+offset)
+        LObs.SetPoint(0,self.Xmin+74*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
+        LObs.SetPoint(1,self.Xmin+81*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
 
         #textObs = rt.TLatex(0.15,0.90, "Expected")
-        textObs = rt.TLatex(self.Xmin+82*xRange/100, self.Ymax-1.50*yRange/10+offset, "Expected")
+        textObs = rt.TLatex(self.Xmin+82*xRange/100+xoffset, self.Ymax-1.50*yRange/10+yoffset, "Expected")
         textObs.SetTextFont(42)
         textObs.SetTextSize(0.030)
         textObs.Draw()
         textObsList.append(textObs)
 
-        offset = -(-0.8)*(yRange/self.labelOffset)
+        yoffset = -(-0.8)*(yRange/self.labelOffset)
         LExp= rt.TGraph(2)
         LExp.SetName("LExp")
         LExp.SetTitle("LExp")
@@ -176,14 +183,13 @@ class ContPlotCollection():
         LExp.SetLineStyle(1)
         LExp.SetLineWidth(4)
         LExp.SetMarkerStyle(20)
-        LExp.SetPoint(0,self.Xmin+74*xRange/100, self.Ymax-1.35*yRange/10+offset)
-        LExp.SetPoint(1,self.Xmin+81*xRange/100, self.Ymax-1.35*yRange/10+offset)
-        textObs = rt.TLatex(self.Xmin+82*xRange/100, self.Ymax-1.50*yRange/10+offset, "Observed")
+        LExp.SetPoint(0,self.Xmin+74*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
+        LExp.SetPoint(1,self.Xmin+81*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
+        textObs = rt.TLatex(self.Xmin+82*xRange/100+xoffset, self.Ymax-1.50*yRange/10+yoffset, "Observed")
         textObs.SetTextFont(42)
         textObs.SetTextSize(0.030)
         textObs.Draw()
         textObsList.append(textObs)
-
 
         LObs.Draw("LSAME")
         LExp.Draw("LSAME")
@@ -208,8 +214,8 @@ class ContPlotCollection():
         graphWhite.SetLineWidth(2)
         graphWhite.SetPoint(0,self.Xmin, self.Ymax)
         graphWhite.SetPoint(1,self.Xmax, self.Ymax)
-        graphWhite.SetPoint(2,self.Xmax, self.Ymax*(1-(len(self.uniqueModelList)+0.5)/self.labelOffset-0.8/9))
-        graphWhite.SetPoint(3,self.Xmin, self.Ymax*(1-(len(self.uniqueModelList)+0.5)/self.labelOffset-0.8/9))
+        graphWhite.SetPoint(2,self.Xmax, self.Ymax*(1-(min(self.nmodels,len(self.uniqueModelList))+0.5)/self.labelOffset-0.8/9))
+        graphWhite.SetPoint(3,self.Xmin, self.Ymax*(1-(min(self.nmodels,len(self.uniqueModelList))+0.5)/self.labelOffset-0.8/9))
         graphWhite.SetPoint(4,self.Xmin, self.Ymax)
         graphWhite.Draw("FSAME")
         graphWhite.Draw("LSAME")
@@ -223,7 +229,7 @@ class ContPlotCollection():
 	iPos=0
 	CMS_lumi.CMS_lumi(self.c,4, iPos)
         # CMS LABEL
-        textCMS = rt.TLatex(0.25,0.96,"  %s " %(self.preliminary))
+        textCMS = rt.TLatex(0.27,0.96,"  %s " %(self.preliminary))
         textCMS.SetNDC()
         textCMS.SetTextAlign(13)
         textCMS.SetTextFont(52)
@@ -231,30 +237,61 @@ class ContPlotCollection():
         textCMS.Draw()
         self.c.textCMS = textCMS
         # MODEL LABEL
-        textModelLabel= rt.TLatex(0.15,0.90,"%s   NLO+NLL exclusion" %self.label)
+        textModelLabel= rt.TLatex(0.18,0.90,"%s   NLO+NLL exclusion" %self.label)
         textModelLabel.SetNDC()
         textModelLabel.SetTextAlign(13)
         textModelLabel.SetTextFont(42)
         textModelLabel.SetTextSize(0.035)
         textModelLabel.Draw()
         self.c.textModelLabel = textModelLabel
-        if any([x.diagTopOn for x in self.models]):
-            # MTOP LABEL
-            xT = 0.61
-            yT = 0.52
-            angleT = 41.5#math.degrees(math.atan(self.c.GetWw()*0.86/self.c.GetWh()*((self.Ymax-self.Ymin)/(self.Xmax-self.Xmin))**-1))
-            #textMTop = rt.TLatex(xT,yT,"m_{#tilde{t}} = m_{t} + m_{#tilde{#chi}^{0}_{1}}")
+
+        # LABEL MWtop
+        if any([x.diagWOn for x in self.models]):
+            xT = 0.58
+            yT = 0.56
+            angleT = 50.
             if self.transpose:
                 if "Zoom" in self.name:
-                    xT = 0.82
-                    yT = 0.36
+                    xT = 0.87
+                    yT = 0.25
                     angleT = 0
                 else:
                     xT = 0.82
-                    yT = 0.26
+                    yT = 0.19
                     angleT = 0
-            textMTop = rt.TLatex(xT,yT,"#Deltam_{1}")
+            textMW = rt.TLatex(xT,yT,"#Deltam_{1}")
+            textMW.SetNDC()
+            textMW.SetTextAlign(13)
+            textMW.SetTextFont(42)
+            textMW.SetTextSize(0.024)
+            textMW.SetTextAngle(angleT)
+            textMW.Draw()
+            self.c.textMW = textMW
+            xT = 0.19
+            yT = 0.58
+            textMWop2 = rt.TLatex(xT,yT,"#Deltam_{1} #equiv m#kern[0.2]{_{ #tilde{t}}} - m_{#chi^{0}_{1}} = m_{W}")
+            textMWop2.SetNDC()
+            textMWop2.SetTextAlign(13)
+            textMWop2.SetTextFont(42)
+            textMWop2.SetTextSize(0.024)
+            textMWop2.Draw()
+            self.c.textMWop2 = textMWop2
 
+        # MTOP LABEL
+        if any([x.diagTopOn for x in self.models]):
+            xT = 0.63
+            yT = 0.56
+            angleT = 50.
+            if self.transpose:
+                if "Zoom" in self.name:
+                    xT = 0.87
+                    yT = 0.34
+                    angleT = 0
+                else:
+                    xT = 0.82
+                    yT = 0.218
+                    angleT = 0
+            textMTop = rt.TLatex(xT,yT,"#Deltam_{2}")
             textMTop.SetNDC()
             textMTop.SetTextAlign(13)
             textMTop.SetTextFont(42)
@@ -263,9 +300,9 @@ class ContPlotCollection():
             textMTop.Draw()
             self.c.textMTop = textMTop
 
-            xT = 0.16
-            yT = 0.52
-            textMTop2 = rt.TLatex(xT,yT,"#Deltam_{1} #equiv m#kern[0.2]{_{#tilde{t}}} - m_{#chi^{0}_{1}} = m_{t}")
+            xT = 0.19
+            yT = 0.54
+            textMTop2 = rt.TLatex(xT,yT,"#Deltam_{2} #equiv m#kern[0.2]{_{ #tilde{t}}} - m_{#chi^{0}_{1}} = m_{ t}")
             textMTop2.SetNDC()
             textMTop2.SetTextAlign(13)
             textMTop2.SetTextFont(42)
@@ -273,72 +310,43 @@ class ContPlotCollection():
             textMTop2.Draw()
             self.c.textMTop2 = textMTop2
 
-        if any([x.diagWOn for x in self.models]):
-            # LABEL MWtop
-            xT = 0.53
-            yT = 0.52
-            angleT = 41.5#math.degrees(math.atan(self.c.GetWw()*0.86/self.c.GetWh()*((self.Ymax-self.Ymin)/(self.Xmax-self.Xmin))**-1))
-            if self.transpose:
-                if "Zoom" in self.name:
-                    xT = 0.82
-                    yT = 0.26
-                    angleT = 0
-                else:
-                    xT = 0.82
-                    yT = 0.20
-                    angleT = 0
 
-            textMW = rt.TLatex(xT,yT,"#Deltam_{2}")
-            #textMW = rt.TLatex(xT,yT,"m_{#tilde{t}} = m_{W} + m_{#tilde{#chi}^{0}_{1}}")
-            textMW.SetNDC()
-            textMW.SetTextAlign(13)
-            textMW.SetTextFont(42)
-            textMW.SetTextSize(0.024)
-            textMW.SetTextAngle(angleT)
-            textMW.Draw()
-            self.c.textMW = textMW
-            xT = 0.16
-            yT = 0.47
-            textMWop2 = rt.TLatex(xT,yT,"#Deltam_{2} #equiv m#kern[0.2]{_{#tilde{t}}} -m_{#chi^{0}_{1}} =  m_{W}")
-            textMWop2.SetNDC()
-            textMWop2.SetTextAlign(13)
-            textMWop2.SetTextFont(42)
-            textMWop2.SetTextSize(0.024)
-            textMWop2.Draw()
-            self.c.textMWop2 = textMWop2
+#        if any([getattr(x,"textT2qqOne",False) for x in self.models]):
+#            # LABEL T2qq single-squark degeneracy
+#            if self.name == "mix":
+#                if self.transpose:
+#                    textOneSq = rt.TLatex(0.16,0.45,"one light #tilde{q}")
+#                else:
+#                    textOneSq = rt.TLatex(0.17,0.33,"one light #tilde{q}")
+#            else:
+#                textOneSq = rt.TLatex(0.43,0.22,"#tilde{q} = #tilde{u}_{L}")
+#            textOneSq.SetNDC()
+#            textOneSq.SetTextAlign(13)
+#            textOneSq.SetTextFont(62)
+#            textOneSq.SetTextSize(0.03)
+#            model = filter(lambda x : getattr(x,"textT2qqOne",False) == True,self.models)[0]
+#            textOneSq.SetTextColor(model.color)
+#            textOneSq.Draw()
+#            self.c.textOneSq = textOneSq
 
-
-        if any([getattr(x,"textT2qqOne",False) for x in self.models]):
-            # LABEL T2qq single-squark degeneracy
-            if self.name == "mix":
-                if self.transpose:
-                    textOneSq = rt.TLatex(0.16,0.45,"one light #tilde{q}")
-                else:
-                    textOneSq = rt.TLatex(0.17,0.33,"one light #tilde{q}")
-            else:
-                textOneSq = rt.TLatex(0.20,0.32,"one light #tilde{q}")
-            textOneSq.SetNDC()
-            textOneSq.SetTextAlign(13)
-            textOneSq.SetTextFont(62)
-            textOneSq.SetTextSize(0.034)
-            textOneSq.Draw()
-            self.c.textOneSq = textOneSq
-
-        if any([getattr(x,"textT2qqEight",False) for x in self.models]):
-            # LABEL T2qq single-squark degeneracy
-            if self.name == "mix":
-                if self.transpose:
-                    textEightSq = rt.TLatex(0.42,0.64,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-                else:
-                    textEightSq = rt.TLatex(0.35,0.51,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-            else:
-                textEightSq =  rt.TLatex(0.50,0.52,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-            textEightSq.SetNDC()
-            textEightSq.SetTextAlign(13)
-            textEightSq.SetTextFont(62)
-            textEightSq.SetTextSize(0.034)
-            textEightSq.Draw()
-            self.c.textEightSq = textEightSq
+#        if any([getattr(x,"textT2qqEight",False) for x in self.models]):
+#            # LABEL T2qq single-squark degeneracy
+#            if self.name == "mix":
+#                if self.transpose:
+#                    textEightSq = rt.TLatex(0.42,0.64,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
+#                else:
+#                    textEightSq = rt.TLatex(0.35,0.51,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
+#            else:
+##                textEightSq =  rt.TLatex(0.50,0.52,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
+#                textEightSq =  rt.TLatex(0.78,0.22,"#tilde{q} = #tilde{Q}")
+#            textEightSq.SetNDC()
+#            textEightSq.SetTextAlign(13)
+#            textEightSq.SetTextFont(62)
+#            textEightSq.SetTextSize(0.034)
+#            model = filter(lambda x : getattr(x,"textT2qqEight",False) == True,self.models)[0]
+#            textEightSq.SetTextColor(model.color)
+#            textEightSq.Draw()
+#            self.c.textEightSq = textEightSq
 
     def DrawDiagonalMTop(self):
         if self.transpose:
@@ -356,6 +364,7 @@ class ContPlotCollection():
         #diagonal.Draw("FSAME")
         diagonal.Draw("LSAME")
         self.c.topDiagonal = diagonal
+
     def DrawTransposeLine(self):
         if self.transpose:
             xs = array("d",[self.Xmin,self.Xmax])
@@ -386,10 +395,24 @@ class ContPlotCollection():
         diagonal.Draw("LSAME")
         self.c.wDiagonal = diagonal
 
+    def DrawDiagonal(self):
+        if self.transpose:
+            return 
+        else:
+            xs = array("d",[self.Xmin,(self.Xmax-self.Xmin)/2+self.Xmin,self.Xmax])
+            ys = array("d",[x for x in xs])
+            diagonal = rt.TGraph(3, xs, ys)
+        diagonal.SetName("diagonal")
+        diagonal.SetFillColor(rt.kGray)
+        diagonal.SetLineColor(rt.kBlack)
+        diagonal.SetLineStyle(2)
+        #diagonal.Draw("FSAME")
+        diagonal.Draw("LSAME")
+        self.c.diagonal = diagonal
 
     def DrawTopCorrPoly(self):
         if self.transpose:
-            xs = array("d",[self.Xmin,self.Xmin,250.,250.])
+            xs = array("d",[self.Xmin,self.Xmin,275.,275.])
             ys = array("d",[150.,200.,200,150])
         else:
             xs = array("d",[150.+self.Ymin,200.+self.Ymin,287.5,262.5])
@@ -411,13 +434,13 @@ class ContPlotCollection():
         for modelName in remainderList:
             self.contPlotDict[modelName].DrawLinesSimple()
 
+        self.c.SetLeftMargin(0.16)
         self.c.SetRightMargin(0.05)
-        if self.modelType == "mix":
-            self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().SetTitle("m#kern[0.1]{_{#lower[-0.12]{#tilde{q}}}} / m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]")
-        if self.name == "allThirdGen" or self.name == "allThirdGenZoom":
-            self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().SetTitle("m#kern[0.4]{_{#lower[-0.12]{#tilde{t}}}} / m#kern[0.1]{_{#lower[-0.12]{#tilde{b}}}} [GeV]")
+        self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().SetTitleOffset(1.5)
         if self.transpose:
             self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().SetTitle(self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().GetTitle().replace(" [GeV]","") + " - " + self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().GetTitle())
+        if any([model.diagOn for model in self.models]):
+            self.DrawDiagonal()
         if any([model.diagTopOn for model in self.models]):
             self.DrawDiagonalMTop()
         if any([model.diagWOn for model in self.models]):
@@ -435,27 +458,32 @@ def makeSummary(outputname,filenameTemplate,modelNames,modelType,transpose):
     contPlotCollection = ContPlotCollection(modelNames,modelType,name= outputname,transpose=transpose)
     contPlotCollection.setContPlots(filenameTemplate)
     contPlotCollection.Draw()
-    contPlotCollection.Save("{0}SUMMARY".format(outputname))
+    contPlotCollection.Save("{0}SUMMARY{1}".format(outputname,{True:"_transpose",False:""}[transpose]))
 
 if __name__ == '__main__':
     # read input arguments
-    transpose = True
-    filenameTemplate = "/home/hep/mc3909/PlotsSMS/config/ApprovalReprise/{0}_SUS15005.cfg"
-    gluinoModelNames = ["T1bbbb","T1ttbb","T1tttt"]
-    lightGluinoModelNames = ["T1qqqq",]
-    mixNames = ["T1qqqq","T2qq","T2qqDegen"]
-    lightModelNames = ["T2qq","T2qqDegen"]
-    naturalModelNamesWithT1 = ["T5ttcc","T5ttttDM175","T1tttt"]
-    naturalModelNames = ["T5ttcc","T5ttttDM175"]
-    allThirdGenNames = ["T2bb","T2tb","T2tt","T2-4bd","T2mixed","T2cc"]
-    thirdGenNames = ["T2tt","T2tb","T2bb","T2bW_X05"][:-1]
+    transpose = False
+    filenameTemplate = "./config/SUS16038/{0}_SUS16038.cfg"
+    gluinoModelNames = ["T1qqqq","T1bbbb","T1tttt"]
+    squarkModelNames = ["T2qq","T2qqDegen","T2bb","T2tt","T2cc"]
+    splitModelNames = [
+        "T1qqqqLL0p001",
+        "T1qqqqLL0p01",
+        "T1qqqqLL0p1",
+        "T1qqqqLL1",
+        "T1qqqqLL10",
+       "T1qqqqLL100",
+        "T1qqqqLL1000",
+        "T1qqqqLL10000",
+        #"T1qqqqLL100000",
+        ]
 
-    # makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose)
-    # makeSummary("natural",filenameTemplate,naturalModelNames,"gluino",transpose)
-    # makeSummary("naturalWT1",filenameTemplate,naturalModelNamesWithT1,"gluino",transpose)
-    # makeSummary("mix",filenameTemplate,mixNames,"mix",transpose)
-    # makeSummary("allThirdGen",filenameTemplate,allThirdGenNames,"stop",transpose)
-    makeSummary("allThirdGenZoom",filenameTemplate,allThirdGenNames,"stop",transpose)
+    makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=False)
+    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=False)
+    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=False)
 
-    #makeSummary("thirdGen",filenameTemplate,thirdGenNames,"squark")
-    #makeSummary("lightGluino",filenameTemplate,lightGluinoModelNames,"gluino")
+    makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=True)
+    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=True)
+    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=True)
+
+    makeSummary("squarkZoom",filenameTemplate,squarkModelNames,"squark",transpose=True)
