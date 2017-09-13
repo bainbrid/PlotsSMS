@@ -131,7 +131,7 @@ class ContPlotCollection():
             if model.label2 != "":
                 textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
                                     self.Ymax-1.50*yRange/10+yoffset, 
-                                    model.label+"  ("+model.label2+")")
+                                    model.label2)
             else:
                 textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
                                     self.Ymax-1.50*yRange/10+yoffset, 
