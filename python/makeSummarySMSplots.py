@@ -310,44 +310,6 @@ class ContPlotCollection():
             textMTop2.Draw()
             self.c.textMTop2 = textMTop2
 
-
-#        if any([getattr(x,"textT2qqOne",False) for x in self.models]):
-#            # LABEL T2qq single-squark degeneracy
-#            if self.name == "mix":
-#                if self.transpose:
-#                    textOneSq = rt.TLatex(0.16,0.45,"one light #tilde{q}")
-#                else:
-#                    textOneSq = rt.TLatex(0.17,0.33,"one light #tilde{q}")
-#            else:
-#                textOneSq = rt.TLatex(0.43,0.22,"#tilde{q} = #tilde{u}_{L}")
-#            textOneSq.SetNDC()
-#            textOneSq.SetTextAlign(13)
-#            textOneSq.SetTextFont(62)
-#            textOneSq.SetTextSize(0.03)
-#            model = filter(lambda x : getattr(x,"textT2qqOne",False) == True,self.models)[0]
-#            textOneSq.SetTextColor(model.color)
-#            textOneSq.Draw()
-#            self.c.textOneSq = textOneSq
-
-#        if any([getattr(x,"textT2qqEight",False) for x in self.models]):
-#            # LABEL T2qq single-squark degeneracy
-#            if self.name == "mix":
-#                if self.transpose:
-#                    textEightSq = rt.TLatex(0.42,0.64,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-#                else:
-#                    textEightSq = rt.TLatex(0.35,0.51,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-#            else:
-##                textEightSq =  rt.TLatex(0.50,0.52,"#tilde{q}_{L} + #tilde{q}_{R} (#tilde{u},#tilde{d},#tilde{s},#tilde{c})")
-#                textEightSq =  rt.TLatex(0.78,0.22,"#tilde{q} = #tilde{Q}")
-#            textEightSq.SetNDC()
-#            textEightSq.SetTextAlign(13)
-#            textEightSq.SetTextFont(62)
-#            textEightSq.SetTextSize(0.034)
-#            model = filter(lambda x : getattr(x,"textT2qqEight",False) == True,self.models)[0]
-#            textEightSq.SetTextColor(model.color)
-#            textEightSq.Draw()
-#            self.c.textEightSq = textEightSq
-
     def DrawDiagonalMTop(self):
         if self.transpose:
             xs = array("d",[self.Xmin,self.Xmax])
@@ -465,7 +427,7 @@ if __name__ == '__main__':
     transpose = False
     filenameTemplate = "./config/SUS16038/{0}_SUS16038.cfg"
     gluinoModelNames = ["T1qqqq","T1bbbb","T1tttt"]
-    squarkModelNames = ["T2qq","T2qqDegen","T2bb","T2tt","T2cc"]
+    squarkModelNames = ["T2qqOne","T2qqDegen","T2bb","T2tt","T2cc"]
     splitModelNames = [
         "T1qqqqLL0p001",
         "T1qqqqLL0p01",
