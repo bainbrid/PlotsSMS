@@ -48,7 +48,7 @@ class smsPlotABS(object):
 
         self.c.SetRightMargin(0.19)
         self.c.SetTopMargin(0.08)
-        self.c.SetLeftMargin(0.14)
+        self.c.SetLeftMargin(0.16)
         self.c.SetBottomMargin(0.14)
 
         # set x axis
@@ -65,15 +65,17 @@ class smsPlotABS(object):
         self.emptyHisto.GetYaxis().SetLabelSize(0.035)
         self.emptyHisto.GetYaxis().SetTitleFont(42)
         self.emptyHisto.GetYaxis().SetTitleSize(0.05)
-        self.emptyHisto.GetYaxis().SetTitleOffset(1.3)
+        self.emptyHisto.GetYaxis().SetTitleOffset(1.5)
         self.emptyHisto.GetYaxis().SetTitle(self.model.LSP)
         if hasattr(self.model, "Ndivisions"):
             self.emptyHisto.GetXaxis().SetNdivisions(self.model.Ndivisions)
         #self.emptyHisto.GetYaxis().CenterTitle(True)
                 
     def DrawText(self):
+
         #redraw axes
         self.c.RedrawAxis()
+
         # white background
         graphWhite = rt.TGraph(5)
         graphWhite.SetName("white")
@@ -102,17 +104,19 @@ class smsPlotABS(object):
 	CMS_lumi.lumi_sqrtS = self.energy+" TeV"  
 	iPos=0
 	CMS_lumi.CMS_lumi(self.c,4, iPos)
+
         # CMS LABEL
-        textCMS = rt.TLatex(0.25,0.96,"  %s " %(self.preliminary))
+        textCMS = rt.TLatex(0.27,0.96,"  %s " %(self.preliminary))
         textCMS.SetNDC()
         textCMS.SetTextAlign(13)
         textCMS.SetTextFont(52)
         textCMS.SetTextSize(0.033)
         textCMS.Draw()
         self.c.textCMS = textCMS
+
         # MODEL LABEL
         if(self.model.label2 == ""):
-            textModelLabel= rt.TLatex(0.15,0.90,"%s   NLO+NLL exclusion" %self.model.label)
+            textModelLabel= rt.TLatex(0.18,0.90,"%s   NLO+NLL exclusion" %self.model.label)
             textModelLabel.SetNDC()
             textModelLabel.SetTextAlign(13)
             textModelLabel.SetTextFont(42)
@@ -127,14 +131,14 @@ class smsPlotABS(object):
             #textModelLabel3.Draw()
             #self.c.textModelLabel3 = textModelLabel3
         else:
-            textModelLabel= rt.TLatex(0.15,0.91,"%s   NLO+NLL exclusion" %self.model.label)
+            textModelLabel= rt.TLatex(0.18,0.91,"%s   NLO+NLL exclusion" %self.model.label)
             textModelLabel.SetNDC()
             textModelLabel.SetTextAlign(13)
             textModelLabel.SetTextFont(42)
             textModelLabel.SetTextSize(0.035)
             textModelLabel.Draw()
             self.c.textModelLabel = textModelLabel
-            textModelLabel2= rt.TLatex(0.15,0.87,"%s" %self.model.label2)
+            textModelLabel2= rt.TLatex(0.18,0.87,"%s" %self.model.label2)
             textModelLabel2.SetNDC()
             textModelLabel2.SetTextAlign(13)
             textModelLabel2.SetTextFont(42)
@@ -156,7 +160,7 @@ class smsPlotABS(object):
             xT = getattr(self.model,"xTextTop",0.38)
             yT = getattr(self.model,"yTextTop",0.50)
             angleT = getattr(self.model,"angleTextTop",61)
-            textMTop = rt.TLatex(xT,yT,"m_{#tilde{t}} = m_{t} + m_{#tilde{#chi}^{0}_{1}}")
+            textMTop = rt.TLatex(xT,yT,"m_{ #tilde{t}} = m_{ t} + m_{#tilde{#chi}^{0}_{1}}")
             textMTop.SetNDC()
             textMTop.SetTextAlign(13)
             textMTop.SetTextFont(42)
@@ -170,7 +174,7 @@ class smsPlotABS(object):
             xT = getattr(self.model,"xTextW",0.38)
             yT = getattr(self.model,"yTextW",0.50)
             angleT = getattr(self.model,"angleTextW",61)
-            textMW = rt.TLatex(xT,yT,"m_{#tilde{t}} = m_{W} + m_{#tilde{#chi}^{0}_{1}}")
+            textMW = rt.TLatex(xT,yT,"m_{ #tilde{t}} = m_{ W} + m_{#tilde{#chi}^{0}_{1}}")
             textMW.SetNDC()
             textMW.SetTextAlign(13)
             textMW.SetTextFont(42)
@@ -178,7 +182,6 @@ class smsPlotABS(object):
             textMW.SetTextAngle(angleT)
             textMW.Draw()
             self.c.textMW = textMW
-
 
         if getattr(self.model,"textT2qqOne",False):
             # LABEL T2qq single-squark degeneracy
@@ -199,7 +202,6 @@ class smsPlotABS(object):
             textEightSq.SetTextSize(0.034)
             textEightSq.Draw()
             self.c.textEightSq = textEightSq
-
 
     def Save(self,label):
         # save the output
@@ -339,7 +341,6 @@ class smsPlotABS(object):
         diagonal.Draw("LSAME")
         self.c.diagonal = diagonal
 
-
     def DrawDiagonalMTop(self):
         xs = array("d",[self.model.Xmin,(self.model.Xmax-self.model.Xmin)/2+self.model.Xmin,self.model.Xmax])
         ys = array("d",[x - 175. for x in xs])
@@ -363,7 +364,6 @@ class smsPlotABS(object):
         diagonal.Draw("FSAME")
         diagonal.Draw("LSAME")
         self.c.wDiagonal = diagonal
-
 
     def DrawTopCorrPoly(self):
         xs = array("d",[150.+self.model.Ymin,200.+self.model.Ymin,287.5,262.5])
@@ -396,7 +396,6 @@ class smsPlotABS(object):
                 continue
             for obj in objs:
                 obj.Draw("LSAME")
-
         
     def DrawLines(self):
         # observed
