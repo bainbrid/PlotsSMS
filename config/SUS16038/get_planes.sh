@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# Vanilla models
 cp /home/hep/klo2/public_html/RA1/BTagFormula/FullFit/Log/20170713/Unblinding36fb2017_v14_T1bbbb/gridOut_ul.root T1bbbb_expected.root
 cp /home/hep/klo2/public_html/RA1/BTagFormula/FullFit/Log/20170713/Unblinding36fb2017_v14_T1bbbb/gridOutObserved_ul.root T1bbbb_observed.root
 cp /home/hep/klo2/public_html/RA1/BTagFormula/FullFit/Log/20170713/Unblinding36fb2017_v14_T2bb/gridOut_ul.root T2bb_expected.root
@@ -13,3 +15,7 @@ cp /vols/build/cms/sdb15/public/Analysis/RA1/201708_Aug/10_SMS_limitPlane/T1qqqq
 cp /vols/build/cms/sdb15/public/Analysis/RA1/201708_Aug/10_SMS_limitPlane/T1qqqq/gridOutObserved_ul.root T1qqqq_observed.root
 cp /vols/build/cms/sdb15/public/Analysis/RA1/201708_Aug/10_SMS_limitPlane/T2qq/gridOut_ul.root T2qq_expected.root
 cp /vols/build/cms/sdb15/public/Analysis/RA1/201708_Aug/10_SMS_limitPlane/T2qq/gridOutObserved_ul.root T2qq_observed.root
+
+# LL models
+cp /vols/build/cms/bainbrid/output/v1.6.x_RB_170910_T1qqqqLL/gridOutObserved_ul.root T1qqqqLL_observed.root
+cp /vols/build/cms/bainbrid/output/v1.6.x_RB_170910_T1qqqqLL/gridOut_ul.root T1qqqqLL_expected.root
