@@ -245,11 +245,11 @@ class sms():
         self.label2= "";
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 600
-        self.Xmax = 2100
+        self.Xmax = 2200
         self.Ymin = 0
-        self.Ymax = 1800
+        self.Ymax = 1900
         self.Zmin = 0.001
-        self.Zmax = 2.
+        self.Zmax = 3.
         # produce sparticle
         self.sParticle = "m_{#tilde{g}} [GeV]"
         # LSP
@@ -260,56 +260,58 @@ class sms():
         self.blankTopCorr = False
         self.diagWOn = False
 
+    def ctau(self) : return False
+
     def T1qqqqLL0p001(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p001"
         self.color = rt.kGreen+2
-        self.label = "c#tau = 0.001 mm";
+        self.label2 = "c#tau = 0.001 mm" if self.ctau() else "#tau = 3 #times 10^{-6} ns";
 
     def T1qqqqLL0p01(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p01"
         self.color = rt.kGreen+0
-        self.label = "c#tau = 0.01 mm";
+        self.label2 = "c#tau = 0.01 mm" if self.ctau() else "#tau = 3 #times 10^{-5} ns";
 
     def T1qqqqLL0p1(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p1"
         self.color = rt.kOrange
-        self.label = "c#tau = 0.1 mm";
+        self.label2 = "c#tau = 0.1 mm" if self.ctau() else "#tau = 3 #times 10^{-4} ns";
 
     def T1qqqqLL1(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL1"
         self.color = rt.kOrange+3
-        self.label = "c#tau = 1 mm";
+        self.label2 = "c#tau = 1 mm" if self.ctau() else "#tau = 3 #times 10^{-3} ns";
 
     def T1qqqqLL10(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10"
         self.color = rt.kRed
-        self.label = "c#tau = 1 cm";
+        self.label2 = "c#tau = 1 cm" if self.ctau() else "#tau = 3 #times 10^{-2} ns";
 
     def T1qqqqLL100(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100"
         self.color = rt.kBlue
-        self.label = "c#tau = 10 cm";
+        self.label2 = "c#tau = 10 cm" if self.ctau() else "#tau = 3 #times 10^{-1} ns";
 
     def T1qqqqLL1000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL1000"
         self.color = rt.kCyan+1
-        self.label = "c#tau = 1 m";
+        self.label2 = "c#tau = 1 m" if self.ctau() else "#tau = 3 #times 10^{0} ns";
 
     def T1qqqqLL10000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10000"
         self.color = rt.kMagenta
-        self.label = "c#tau = 10 m";
+        self.label2 = "c#tau = 10 m" if self.ctau() else "#tau = 3 #times 10^{2} ns";
 
     def T1qqqqLL100000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100000"
         self.color = rt.kBlack
-        self.label = "c#tau = 100 m";
+        self.label2 = "c#tau = 100 m" if self.ctau() else "#tau = 3 #times 10^{-6} ns";
