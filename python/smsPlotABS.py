@@ -91,8 +91,8 @@ class smsPlotABS(object):
             graphWhite.SetPoint(2,self.model.Xmax, self.model.Ymax*0.75)
             graphWhite.SetPoint(3,self.model.Xmin, self.model.Ymax*0.75)
         else:
-            graphWhite.SetPoint(2,self.model.Xmax, self.model.Ymax*0.69)
-            graphWhite.SetPoint(3,self.model.Xmin, self.model.Ymax*0.69)
+            graphWhite.SetPoint(2,self.model.Xmax, self.model.Ymax*0.72)
+            graphWhite.SetPoint(3,self.model.Xmin, self.model.Ymax*0.72)
         graphWhite.SetPoint(4,self.model.Xmin, self.model.Ymax)
         graphWhite.Draw("FSAME")
         graphWhite.Draw("LSAME")
@@ -131,18 +131,18 @@ class smsPlotABS(object):
             #textModelLabel3.Draw()
             #self.c.textModelLabel3 = textModelLabel3
         else:
-            textModelLabel= rt.TLatex(0.18,0.91,"%s   NLO+NLL exclusion" %self.model.label)
+            textModelLabel= rt.TLatex(0.18,0.90,"%s   NLO+NLL exclusion" %self.model.label)
             textModelLabel.SetNDC()
             textModelLabel.SetTextAlign(13)
             textModelLabel.SetTextFont(42)
-            textModelLabel.SetTextSize(0.035)
+            textModelLabel.SetTextSize(0.03)
             textModelLabel.Draw()
             self.c.textModelLabel = textModelLabel
-            textModelLabel2= rt.TLatex(0.18,0.87,"%s" %self.model.label2)
+            textModelLabel2= rt.TLatex(0.18,0.85,"%s" %self.model.label2)
             textModelLabel2.SetNDC()
             textModelLabel2.SetTextAlign(13)
             textModelLabel2.SetTextFont(42)
-            textModelLabel2.SetTextSize(0.035)
+            textModelLabel2.SetTextSize(0.03)
             textModelLabel2.Draw()
             self.c.textModelLabel2 = textModelLabel2
 
