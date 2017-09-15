@@ -426,7 +426,7 @@ if __name__ == '__main__':
     # read input arguments
     transpose = False
     filenameTemplate = "./config/SUS16038/{0}_SUS16038.cfg"
-    gluinoModelNames = ["T1qqqq","T1bbbb","T1tttt"]
+    gluinoModelNames = ["T1bbbb","T1tttt"]
     squarkModelNames = ["T2qqOne","T2qqDegen","T2bb","T2tt","T2cc"]
     splitModelNames = [
         "T1qqqqLL0p001",
