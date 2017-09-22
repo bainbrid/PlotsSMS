@@ -81,9 +81,9 @@ class ContPlotCollection():
             self.Ymax = 1300
         elif self.name == "split":
             self.Xmin = 600
-            self.Xmax = 2000
+            self.Xmax = 2200
             self.Ymin = 0
-            self.Ymax = 2200
+            self.Ymax = 1900
         if self.transpose:
             if self.name == "gluino":
                 self.Xmin = 600
