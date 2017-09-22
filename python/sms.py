@@ -260,7 +260,7 @@ class sms():
         self.blankTopCorr = False
         self.diagWOn = False
 
-    def ctau(self) : return False
+    def ctau(self) : return True
 
     def T1qqqqLL0p001(self):
         self.T1qqqqLL()
@@ -290,13 +290,13 @@ class sms():
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10"
         self.color = rt.kRed
-        self.label2 = "c#tau = 1 cm" if self.ctau() else "#tau = 3 #times 10^{-2} ns";
+        self.label2 = "c#tau = 10 mm" if self.ctau() else "#tau = 3 #times 10^{-2} ns";
 
     def T1qqqqLL100(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100"
         self.color = rt.kBlue
-        self.label2 = "c#tau = 10 cm" if self.ctau() else "#tau = 3 #times 10^{-1} ns";
+        self.label2 = "c#tau = 100 mm" if self.ctau() else "#tau = 3 #times 10^{-1} ns";
 
     def T1qqqqLL1000(self):
         self.T1qqqqLL()
@@ -308,10 +308,10 @@ class sms():
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10000"
         self.color = rt.kMagenta
-        self.label2 = "c#tau = 10 m" if self.ctau() else "#tau = 3 #times 10^{2} ns";
+        self.label2 = "c#tau = 10 m" if self.ctau() else "#tau = 3 #times 10^{1} ns";
 
     def T1qqqqLL100000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100000"
         self.color = rt.kBlack
-        self.label2 = "c#tau = 100 m" if self.ctau() else "#tau = 3 #times 10^{-6} ns";
+        self.label2 = "c#tau = 100 m" if self.ctau() else "#tau = 3 #times 10^{2} ns";
