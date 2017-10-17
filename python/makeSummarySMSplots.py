@@ -83,7 +83,7 @@ class ContPlotCollection():
             self.Xmin = 600
             self.Xmax = 2200
             self.Ymin = 0
-            self.Ymax = 1900
+            self.Ymax = 2000
         if self.transpose:
             if self.name == "gluino":
                 self.Xmin = 600
@@ -434,10 +434,10 @@ if __name__ == '__main__':
         "T1qqqqLL0p1",
         "T1qqqqLL1",
         "T1qqqqLL10",
-       "T1qqqqLL100",
+        "T1qqqqLL100",
         "T1qqqqLL1000",
         "T1qqqqLL10000",
-        #"T1qqqqLL100000",
+        "T1qqqqLL100000",
         ]
 
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=False)
