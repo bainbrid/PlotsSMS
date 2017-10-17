@@ -104,13 +104,22 @@ class inputFile():
         return xValue,yValue
 
     def findHISTOGRAM(self, fileName):
-        fileIN = open(fileName)        
+        fileIN = open(fileName)
+        print fileIN
         for line in fileIN:
+            print line
             tmpLINE =  line[:-1].split(" ")
+            print tmpLINE
             if tmpLINE[0] != "HISTOGRAM": continue
             fileIN.close()
-            rootFileIn = rt.TFile.Open(tmpLINE[1])
-            x = rootFileIn.Get(tmpLINE[2])
+            try : rootFileIn = rt.TFile.Open(tmpLINE[1])
+            except : 
+                print "Cannot find file {:s}".format(tmpLINE[1])
+                quit()
+            try : x = rootFileIn.Get(tmpLINE[2])
+            except AttributeError : 
+                print "Cannot find histogram {:s}".format(tmpLINE[2])
+                quit()
             if self.transpose:
                 x = self.transposeHist(x)
             x.SetDirectory(0)

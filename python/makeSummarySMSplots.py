@@ -27,6 +27,7 @@ class ContPlotCollection():
     def setContPlots(self,filenameTemplate):
         self.models = []
         for modelname in self.modelNames:
+            print "########## Processing mode '{:s}' ##########".format(modelname)
             makeHisto = True
             if modelname != self.modelNames[0]:
                 makeHisto = False
@@ -68,7 +69,7 @@ class ContPlotCollection():
         self.Ymin = Ymin
         self.Xmax = Xmax
         self.Ymax = Ymax
-        print self.name
+        #print self.name
         if self.name == "gluino":
             self.Xmin = 600
             self.Xmax = 2300
@@ -222,7 +223,7 @@ class ContPlotCollection():
         self.c.graphWhite = graphWhite
        	CMS_lumi.writeExtraText = 0
 	CMS_lumi.extraText = "Supplementary"#self.preliminary
-        print self.preliminary
+        #print self.preliminary
 	CMS_lumi.lumi_13TeV = self.lumi+" fb^{-1}"
 
 	CMS_lumi.lumi_sqrtS = self.energy+" TeV"  
@@ -430,7 +431,7 @@ if __name__ == '__main__':
     squarkModelNames = ["T2qqOne","T2qqDegen","T2bb","T2tt","T2cc"]
     splitModelNames = [
         "T1qqqqLL0p001",
-        "T1qqqqLL0p01",
+#        "T1qqqqLL0p01",
         "T1qqqqLL0p1",
         "T1qqqqLL1",
         "T1qqqqLL10",
