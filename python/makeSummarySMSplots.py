@@ -13,7 +13,8 @@ class ContPlotCollection():
         modelTypeDict = {
             "gluino":"pp #rightarrow #tilde{g} #tilde{g}",
             "squark":"pp #rightarrow #tilde{q} #tilde{q}",
-            "split":label
+            "split":label,
+            "splitAll":label,
             }
         if modelType not in modelTypeDict:
             raise AttributeError, "Unsupported model type: "+modelType
@@ -55,7 +56,7 @@ class ContPlotCollection():
             if not any([model.modelname == x.modelname for x in self.uniqueModelList]):
                 self.uniqueModelList.append(model)
         self.nmodels = 0
-        if self.modelType == "split" : self.nmodels = (len(self.uniqueModelList)+1)/2
+        if "split" in self.modelType : self.nmodels = (len(self.uniqueModelList)+1)/2
         else : self.nmodels = len(self.uniqueModelList)
 
     def getRanges(self):
@@ -80,11 +81,11 @@ class ContPlotCollection():
             self.Xmax = 1500
             self.Ymin = 0
             self.Ymax = 1300
-        elif self.name == "split":
+        elif "split" in self.name :
             self.Xmin = 600
             self.Xmax = 2200
             self.Ymin = 0
-            self.Ymax = 2000
+            self.Ymax = 2250
         if self.transpose:
             if self.name == "gluino":
                 self.Xmin = 600
@@ -101,7 +102,7 @@ class ContPlotCollection():
                 self.Xmax = 1000
                 self.Ymin = 0
                 self.Ymax = 800
-            elif self.name == "split":
+            elif "split" in self.name :
                 self.Xmin = 600
                 self.Xmax = 2000
                 self.Ymin = 0
@@ -431,7 +432,7 @@ if __name__ == '__main__':
     squarkModelNames = ["T2qqOne","T2qqDegen","T2bb","T2tt","T2cc"]
     splitModelNames = [
         "T1qqqqLL0p001",
-#        "T1qqqqLL0p01",
+        "T1qqqqLL0p01",
         "T1qqqqLL0p1",
         "T1qqqqLL1",
         "T1qqqqLL10",
@@ -441,12 +442,28 @@ if __name__ == '__main__':
         "T1qqqqLL100000",
         ]
 
+    splitAllModelNames = [
+        "T1qqqqLLPrompt",
+        "T1qqqqLL0p001",
+        "T1qqqqLL0p01",
+        "T1qqqqLL0p1",
+        "T1qqqqLL1",
+        "T1qqqqLL10",
+        "T1qqqqLL100",
+        "T1qqqqLL1000",
+        "T1qqqqLL10000",
+        "T1qqqqLL100000",
+        "T1qqqqLLStable",
+        ]
+
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=False)
     makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=False)
     makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=False)
+    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=False)
 
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=True)
     makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=True)
     makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=True)
+    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=True)
 
     makeSummary("squarkZoom",filenameTemplate,squarkModelNames,"squark",transpose=True)
