@@ -21,6 +21,7 @@ class sms():
         elif modelname.find("T2qq") != -1: self.T2qq()
         if modelname.find("T2tb") != -1: self.T2tb()
         if modelname.find("T2bW-X05") != -1: self.T2bW_X05()
+        if modelname.find("T1qqqqLLPrompt") != -1: self.T1qqqqLLPrompt()
         if modelname.find("T1qqqqLL0p001") != -1: self.T1qqqqLL0p001()
         if modelname.find("T1qqqqLL0p01") != -1: self.T1qqqqLL0p01()
         if modelname.find("T1qqqqLL0p1") != -1: self.T1qqqqLL0p1()
@@ -30,6 +31,7 @@ class sms():
         if modelname.find("T1qqqqLL1000") != -1: self.T1qqqqLL1000()
         if modelname.find("T1qqqqLL10000") != -1: self.T1qqqqLL10000()
         if modelname.find("T1qqqqLL100000") != -1: self.T1qqqqLL100000()
+        if modelname.find("T1qqqqLLStable") != -1: self.T1qqqqLLStable()
 
     def T1tttt(self):
         # model name
@@ -262,6 +264,12 @@ class sms():
 
     def ctau(self) : return True
 
+    def T1qqqqLLPrompt(self):
+        self.T1qqqqLL()
+        self.modelname = "T1qqqqLLPrompt"
+        self.color = rt.kGreen+3
+        self.label2 = "Prompt #tilde{g} decay"
+
     def T1qqqqLL0p001(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p001"
@@ -313,5 +321,11 @@ class sms():
     def T1qqqqLL100000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100000"
-        self.color = rt.kBlack
+        self.color = rt.kGray
         self.label2 = "c#tau = 100 m" if self.ctau() else "#tau = 3 #times 10^{2} ns";
+
+    def T1qqqqLLStable(self):
+        self.T1qqqqLL()
+        self.modelname = "T1qqqqLLStable"
+        self.color = rt.kBlack
+        self.label2 = "Stable #tilde{g}"
