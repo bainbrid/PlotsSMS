@@ -105,11 +105,8 @@ class inputFile():
 
     def findHISTOGRAM(self, fileName):
         fileIN = open(fileName)
-        print fileIN
         for line in fileIN:
-            print line
             tmpLINE =  line[:-1].split(" ")
-            print tmpLINE
             if tmpLINE[0] != "HISTOGRAM": continue
             fileIN.close()
             try : rootFileIn = rt.TFile.Open(tmpLINE[1])
