@@ -8,18 +8,34 @@ from smsPlotBrazil import *
 class ContPlotCollection():
     def __init__(self,modelNames,modelType,transpose=False,name = None):
         self.modelNames = modelNames
+        self.modelType = modelType
+
         lsp = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
         label = "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+lsp
         modelTypeDict = {
             "gluino":"pp #rightarrow #tilde{g} #tilde{g}",
-            "squark":"pp #rightarrow #tilde{q} #tilde{q}",
+            "squark":"",#"pp #rightarrow #tilde{q} #bar{#tilde{q}}",
             "split":label,
             "splitAll":label,
+            "gluinoAll":"pp #rightarrow #tilde{g} #tilde{g}",
             }
         if modelType not in modelTypeDict:
             raise AttributeError, "Unsupported model type: "+modelType
-        self.modelType = modelType
         self.label = modelTypeDict[modelType]
+
+        ylabelDict = {
+            "gluino":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
+            "squark":"m#kern[0.1]{_{#lower[-0.12]{#tilde{b} / #tilde{t} / #tilde{q}}}} [GeV]",
+            "split":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
+            "splitAll":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
+            "gluinoAll":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
+            }
+
+        
+        if modelType not in ylabelDict:
+            raise AttributeError, "Unsupported model type in ylabelDict: "+modelType
+        self.ylabel = ylabelDict[modelType]
+
         self.labelOffset = 17.
         self.transpose = transpose
         self.name = name
@@ -76,6 +92,11 @@ class ContPlotCollection():
             self.Xmax = 2300
             self.Ymin = 0
             self.Ymax = 2000
+        elif self.name == "gluinoAll":
+            self.Xmin = 600
+            self.Xmax = 2300
+            self.Ymin = 0
+            self.Ymax = 2100
         elif self.name == "squark":
             self.Xmin = 0
             self.Xmax = 1500
@@ -88,6 +109,11 @@ class ContPlotCollection():
             self.Ymax = 2250
         if self.transpose:
             if self.name == "gluino":
+                self.Xmin = 600
+                self.Xmax = 2300
+                self.Ymin = 0
+                self.Ymax = 3400
+            elif self.name == "gluinoAll":
                 self.Xmin = 600
                 self.Xmax = 2300
                 self.Ymin = 0
@@ -130,10 +156,10 @@ class ContPlotCollection():
             LObs.SetMarkerStyle(20)
             LObs.SetPoint(0,self.Xmin+3*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
             LObs.SetPoint(1,self.Xmin+10*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
-            if model.label2 != "":
+            if model.label3 != "":
                 textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
                                     self.Ymax-1.50*yRange/10+yoffset, 
-                                    model.label2)
+                                    model.label3)
             else:
                 textObs = rt.TLatex(self.Xmin+11*xRange/100+xoffset, 
                                     self.Ymax-1.50*yRange/10+yoffset, 
@@ -400,9 +426,13 @@ class ContPlotCollection():
 
         self.c.SetLeftMargin(0.16)
         self.c.SetRightMargin(0.05)
+        self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().SetNdivisions(510) #@@
         self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().SetTitleOffset(1.5)
+        self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().SetTitle(self.ylabel) #@@ override ylabel of first plot according to ylabelDict
         if self.transpose:
-            self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().SetTitle(self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().GetTitle().replace(" [GeV]","") + " - " + self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().GetTitle())
+            xlabel = self.contPlotDict[self.modelNames[0]].emptyHisto.GetXaxis().GetTitle()
+            ylabel = self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().GetTitle()
+            self.contPlotDict[self.modelNames[0]].emptyHisto.GetYaxis().SetTitle(xlabel.replace(" [GeV]","") + " - " + ylabel)
         if any([model.diagOn for model in self.models]):
             self.DrawDiagonal()
         if any([model.diagTopOn for model in self.models]):
@@ -428,8 +458,20 @@ if __name__ == '__main__':
     # read input arguments
     transpose = False
     filenameTemplate = "./config/SUS16038/{0}_SUS16038.cfg"
-    gluinoModelNames = ["T1bbbb","T1tttt"]
-    squarkModelNames = ["T2qqOne","T2qqDegen","T2bb","T2tt","T2cc"]
+
+    gluinoModelNames = [
+        "T1bbbb",
+        "T1tttt",
+        ]
+
+    squarkModelNames = [
+        "T2bb",
+        "T2tt",
+        "T2cc",
+        "T2qqDegen",
+        "T2qqOne",
+        ]
+
     splitModelNames = [
         "T1qqqqLL0p001",
         "T1qqqqLL0p01",
@@ -456,14 +498,23 @@ if __name__ == '__main__':
         "T1qqqqLLStable",
         ]
 
+    gluinoAllModelNames = [
+        "T1bbbb",
+        "T1tttt",
+        "T1qqqqLLPrompt",
+        "T1qqqqLLStable",
+        ]
+
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=False)
     makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=False)
     makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=False)
+    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=False)
     makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=False)
 
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=True)
     makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=True)
     makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=True)
+    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=True)
     makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=True)
 
     makeSummary("squarkZoom",filenameTemplate,squarkModelNames,"squark",transpose=True)

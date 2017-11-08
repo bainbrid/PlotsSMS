@@ -4,6 +4,7 @@ import ROOT as rt
 class sms():
 
     def __init__(self, modelname):
+        self.lsp = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
         if modelname.find("T1tttt") != -1: self.T1tttt()
         if modelname.find("T1bbbb") != -1: self.T1bbbb()
         if modelname.find("T1qqqq") != -1: self.T1qqqq()
@@ -38,9 +39,9 @@ class sms():
         self.modelname = "T1tttt"
         self.color = rt.kRed
         # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow t #bar{t} "+lsp_s;
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow t #bar{t} "+self.lsp
+        self.label2= ""
+        self.label3= "#tilde{g} #rightarrow t #bar{t} "+self.lsp
         # scan range to plot
         self.Xmin = 600.
         self.Xmax = 2200.
@@ -51,7 +52,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = False
@@ -63,9 +64,9 @@ class sms():
         self.modelname = "T1qqqq"
         # decay chain
         self.color = rt.kGreen+3
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+lsp_s;
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+self.lsp
+        self.label2= ""
+        self.label3= "#tilde{g} #rightarrow q #bar{q} "+self.lsp
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 600
         self.Xmax = 2200
@@ -74,9 +75,9 @@ class sms():
         self.Zmin = 0.001
         self.Zmax = 3.
         # produce sparticle
-        self.sParticle = "m_{#tilde{g}} [GeV]"
+        self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
-        self.LSP = "m_{#tilde{#chi}_{1}^{0}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # diagonal position: mLSP = mgluino - 2mtop
         self.diagOn = False
         self.diagTopOn = False
@@ -88,9 +89,9 @@ class sms():
         self.modelname = "T1bbbb"
         self.color = rt.kBlue
         # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow b #bar{b} "+lsp_s;
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow b #bar{b} "+self.lsp
+        self.label2= ""
+        self.label3= "#tilde{g} #rightarrow b #bar{b} "+self.lsp
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 600.
         self.Xmax = 2300.
@@ -101,7 +102,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = False
@@ -114,9 +115,9 @@ class sms():
         self.color = rt.kRed
         #self.color = rt.kCyan+2
         # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{t}_{1} #tilde{t}_{1}, #tilde{t}_{1} #rightarrow t^{(*)} #tilde{#chi}^{0}_{1}";
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{t}_{1} #bar{#tilde{t}_{1}}, #tilde{t}_{1} #rightarrow t^{(*)} "+self.lsp
+        self.label2= ""
+        self.label3= self.label
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 150.
         self.Xmax = 1200.
@@ -128,7 +129,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{t}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = True
@@ -144,9 +145,9 @@ class sms():
         self.modelname = "T2cc"
         self.color = rt.kOrange+1
         # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{t}_{1} #tilde{t}_{1}, #tilde{t}_{1} #rightarrow c #tilde{#chi}^{0}_{1}";
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{t}_{1} #bar{#tilde{t}_{1}}, #tilde{t}_{1} #rightarrow c "+self.lsp
+        self.label2= ""
+        self.label3= self.label
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 150.
         self.Xmax = 750.
@@ -157,7 +158,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{t}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = False
@@ -172,10 +173,10 @@ class sms():
         # model name
         self.modelname = "T2bb"
         self.color = rt.kBlue
-        # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{b}_{1} #tilde{b}_{1}, #tilde{b}_{1} #rightarrow b #tilde{#chi}^{0}_{1}";
-        self.label2= "";
+        # decay chain 
+        self.label= "pp #rightarrow #tilde{b}_{1} #bar{#tilde{b}_{1}}, #tilde{b}_{1} #rightarrow b "+self.lsp
+        self.label2= ""
+        self.label3= self.label
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 300.
         self.Xmax = 1300.
@@ -187,7 +188,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{b}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = False
@@ -199,9 +200,9 @@ class sms():
         self.modelname = "T2qq"
         self.color = rt.kGreen
         # decay chain
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}";
-        self.label2= "";
+        self.label= "pp #rightarrow #tilde{q} #bar{#tilde{q}}, #tilde{q} #rightarrow q "+self.lsp
+        self.label2= ""
+        self.label3= self.label
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 300.
         self.Xmax = 1700.
@@ -212,7 +213,7 @@ class sms():
         # produce sparticle
         self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{q}}}} [GeV]"
         # LSP
-        self.LSP = "m#kern[0.1]{_{"+lsp_s+"}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # turn off diagonal lines
         self.diagOn = False
         self.diagTopOn = False
@@ -221,30 +222,34 @@ class sms():
         self.textT2qqOne = True
         self.textT2qqEight = True
 
-    def T2qqOne(self):
-        self.T2qq()
-        self.modelname = "T2qqOne"
-        self.color = rt.kGreen
-        tmp = " (#tilde{q}_{L} + #tilde{q}_{R}, #tilde{u}, #tilde{d}, #tilde{s}, #tilde{c})"
-        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}"+tmp;
-        self.textT2qqOne = True
-        self.textT2qqEight = False
-
     def T2qqDegen(self):
         self.T2qq()
         self.modelname = "T2qqDegen"
         self.color = rt.kGreen+3
-        tmp = " (one light #tilde{q})"
-        self.label= "pp #rightarrow #tilde{q} #tilde{q}, #tilde{q} #rightarrow q #tilde{#chi}^{0}_{1}"+tmp;
+        tmp = " (#tilde{q}_{L} + #tilde{q}_{R}, #tilde{u}, #tilde{d}, #tilde{s}, #tilde{c})"
+        self.label= "pp #rightarrow #tilde{q} #bar{#tilde{q}}, #tilde{q} #rightarrow q "+self.lsp+tmp
+        self.label2= ""
+        self.label3= self.label
         self.textT2qqOne = False
         self.textT2qqEight = True
+
+    def T2qqOne(self):
+        self.T2qq()
+        self.modelname = "T2qqOne"
+        self.color = rt.kGreen
+        tmp = " (one light #tilde{q})"
+        self.label= "pp #rightarrow #tilde{q} #bar{#tilde{q}}, #tilde{q} #rightarrow q "+self.lsp+tmp
+        self.label2= ""
+        self.label3= self.label
+        self.textT2qqOne = True
+        self.textT2qqEight = False
 
     def T1qqqqLL(self):
         self.modelname = "T1qqqqLL" # to be overwritten 
         self.color = rt.kGreen # to be overwritten 
-        lsp_s = "#lower[-0.12]{#tilde{#chi}}#lower[0.2]{#scale[0.85]{^{0}}}#kern[-1.3]{#scale[0.85]{_{1}}}"
-        self.label = "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+lsp_s;
-        self.label2= "";
+        self.label = "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+self.lsp
+        self.label2= ""
+        self.label3 = "#tilde{g} #rightarrow q #bar{q} "+self.lsp
         # plot boundary. The top 1/4 of the y axis is taken by the legend
         self.Xmin = 600
         self.Xmax = 2200
@@ -253,9 +258,9 @@ class sms():
         self.Zmin = 0.001
         self.Zmax = 3.
         # produce sparticle
-        self.sParticle = "m_{#tilde{g}} [GeV]"
+        self.sParticle = "m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]"
         # LSP
-        self.LSP = "m_{#tilde{#chi}_{1}^{0}} [GeV]"
+        self.LSP = "m#kern[0.1]{_{"+self.lsp+"}} [GeV]"
         # diagonal position: mLSP = mgluino - 2mtop
         self.diagOn = False
         self.diagTopOn = False
@@ -268,64 +273,77 @@ class sms():
         self.T1qqqqLL()
         self.modelname = "T1qqqqLLPrompt"
         self.color = rt.kGreen+3
+        self.label = "pp #rightarrow #tilde{g} #tilde{g}, #tilde{g} #rightarrow q #bar{q} "+self.lsp
         self.label2 = "Prompt #tilde{g} decay"
+        self.label3 = "#tilde{g} #rightarrow q #bar{q} "+self.lsp+" (Prompt decay)"
 
     def T1qqqqLL0p001(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p001"
         self.color = rt.kGreen+2
-        self.label2 = "c#tau = 0.001 mm" if self.ctau() else "#tau = 3 #times 10^{-6} ns";
+        self.label2 = "c#tau_{0} = 0.001 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-6} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL0p01(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p01"
         self.color = rt.kGreen+0
-        self.label2 = "c#tau = 0.01 mm" if self.ctau() else "#tau = 3 #times 10^{-5} ns";
+        self.label2 = "c#tau_{0} = 0.01 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-5} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL0p1(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p1"
         self.color = rt.kOrange
-        self.label2 = "c#tau = 0.1 mm" if self.ctau() else "#tau = 3 #times 10^{-4} ns";
+        self.label2 = "c#tau_{0} = 0.1 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-4} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL1(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL1"
         self.color = rt.kOrange+3
-        self.label2 = "c#tau = 1 mm" if self.ctau() else "#tau = 3 #times 10^{-3} ns";
+        self.label2 = "c#tau_{0} = 1 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-3} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL10(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10"
         self.color = rt.kRed
-        self.label2 = "c#tau = 10 mm" if self.ctau() else "#tau = 3 #times 10^{-2} ns";
+        self.label2 = "c#tau_{0} = 10 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-2} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL100(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100"
         self.color = rt.kBlue
-        self.label2 = "c#tau = 100 mm" if self.ctau() else "#tau = 3 #times 10^{-1} ns";
+        self.label2 = "c#tau_{0} = 100 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-1} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL1000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL1000"
         self.color = rt.kCyan+1
-        self.label2 = "c#tau = 1 m" if self.ctau() else "#tau = 3 #times 10^{0} ns";
+        self.label2 = "c#tau_{0} = 1000 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{0} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL10000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10000"
         self.color = rt.kMagenta
-        self.label2 = "c#tau = 10 m" if self.ctau() else "#tau = 3 #times 10^{1} ns";
+        self.label2 = "c#tau_{0} = 10#kern[0.05]{000 mm}" if self.ctau() else "#tau_{0} = 3 #times 10^{1} ns"
+        self.label3 = self.label2
 
     def T1qqqqLL100000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100000"
         self.color = rt.kGray
-        self.label2 = "c#tau = 100 m" if self.ctau() else "#tau = 3 #times 10^{2} ns";
+        self.label2 = "c#tau_{0} = 100#kern[0.05]{000 mm}" if self.ctau() else "#tau_{0} = 3 #times 10^{2} ns"
+        self.label3 = self.label2
 
     def T1qqqqLLStable(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLLStable"
-        self.color = rt.kBlack
-        self.label2 = "Stable #tilde{g}"
+        self.color = rt.kGray+2
+        self.label = "pp #rightarrow #tilde{g} #tilde{g}"
+        self.label2 = "Metastable #tilde{g}"
+        self.label3 = "Metastable #tilde{g}"
