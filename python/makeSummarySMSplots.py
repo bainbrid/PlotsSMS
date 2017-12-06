@@ -269,7 +269,7 @@ class ContPlotCollection():
         textModelLabel.SetNDC()
         textModelLabel.SetTextAlign(13)
         textModelLabel.SetTextFont(42)
-        textModelLabel.SetTextSize(0.035)
+        textModelLabel.SetTextSize(0.03)
         textModelLabel.Draw()
         self.c.textModelLabel = textModelLabel
 
@@ -281,17 +281,17 @@ class ContPlotCollection():
             if self.transpose:
                 if "Zoom" in self.name:
                     xT = 0.87
-                    yT = 0.25
+                    yT = 0.255#0.25
                     angleT = 0
                 else:
                     xT = 0.82
-                    yT = 0.19
+                    yT = 0.195#0.19
                     angleT = 0
             textMW = rt.TLatex(xT,yT,"#Deltam_{1}")
             textMW.SetNDC()
             textMW.SetTextAlign(13)
             textMW.SetTextFont(42)
-            textMW.SetTextSize(0.024)
+            textMW.SetTextSize(0.03)
             textMW.SetTextAngle(angleT)
             textMW.Draw()
             self.c.textMW = textMW
@@ -301,7 +301,7 @@ class ContPlotCollection():
             textMWop2.SetNDC()
             textMWop2.SetTextAlign(13)
             textMWop2.SetTextFont(42)
-            textMWop2.SetTextSize(0.024)
+            textMWop2.SetTextSize(0.03)
             textMWop2.Draw()
             self.c.textMWop2 = textMWop2
 
@@ -313,17 +313,17 @@ class ContPlotCollection():
             if self.transpose:
                 if "Zoom" in self.name:
                     xT = 0.87
-                    yT = 0.34
+                    yT = 0.345#0.34
                     angleT = 0
                 else:
                     xT = 0.82
-                    yT = 0.218
+                    yT = 0.223#0.218
                     angleT = 0
             textMTop = rt.TLatex(xT,yT,"#Deltam_{2}")
             textMTop.SetNDC()
             textMTop.SetTextAlign(13)
             textMTop.SetTextFont(42)
-            textMTop.SetTextSize(0.024)
+            textMTop.SetTextSize(0.03)
             textMTop.SetTextAngle(angleT)
             textMTop.Draw()
             self.c.textMTop = textMTop
@@ -334,7 +334,7 @@ class ContPlotCollection():
             textMTop2.SetNDC()
             textMTop2.SetTextAlign(13)
             textMTop2.SetTextFont(42)
-            textMTop2.SetTextSize(0.024)
+            textMTop2.SetTextSize(0.03)
             textMTop2.Draw()
             self.c.textMTop2 = textMTop2
 
