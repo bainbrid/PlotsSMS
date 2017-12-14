@@ -281,21 +281,21 @@ class sms():
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p001"
         self.color = rt.kGreen+2
-        self.label2 = "c#tau_{0} = 0.001 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-6} ns"
+        self.label2 = "c#tau_{0} = 1 #mum" if self.ctau() else "#tau_{0} = 3 #times 10^{-6} ns"
         self.label3 = self.label2
 
     def T1qqqqLL0p01(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p01"
         self.color = rt.kGreen+0
-        self.label2 = "c#tau_{0} = 0.01 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-5} ns"
+        self.label2 = "c#tau_{0} = 10 #mum" if self.ctau() else "#tau_{0} = 3 #times 10^{-5} ns"
         self.label3 = self.label2
 
     def T1qqqqLL0p1(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL0p1"
         self.color = rt.kOrange
-        self.label2 = "c#tau_{0} = 0.1 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{-4} ns"
+        self.label2 = "c#tau_{0} = 100 #mum" if self.ctau() else "#tau_{0} = 3 #times 10^{-4} ns"
         self.label3 = self.label2
 
     def T1qqqqLL1(self):
@@ -323,21 +323,21 @@ class sms():
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL1000"
         self.color = rt.kCyan+1
-        self.label2 = "c#tau_{0} = 1000 mm" if self.ctau() else "#tau_{0} = 3 #times 10^{0} ns"
+        self.label2 = "c#tau_{0} = 1 m" if self.ctau() else "#tau_{0} = 3 #times 10^{0} ns"
         self.label3 = self.label2
 
     def T1qqqqLL10000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL10000"
         self.color = rt.kMagenta
-        self.label2 = "c#tau_{0} = 10#kern[0.05]{000 mm}" if self.ctau() else "#tau_{0} = 3 #times 10^{1} ns"
+        self.label2 = "c#tau_{0} = 10 m" if self.ctau() else "#tau_{0} = 3 #times 10^{1} ns" # 10#kern[0.05]{000 mm}
         self.label3 = self.label2
 
     def T1qqqqLL100000(self):
         self.T1qqqqLL()
         self.modelname = "T1qqqqLL100000"
         self.color = rt.kGray
-        self.label2 = "c#tau_{0} = 100#kern[0.05]{000 mm}" if self.ctau() else "#tau_{0} = 3 #times 10^{2} ns"
+        self.label2 = "c#tau_{0} = 100 m" if self.ctau() else "#tau_{0} = 3 #times 10^{2} ns" # 100#kern[0.05]{000 mm}
         self.label3 = self.label2
 
     def T1qqqqLLStable(self):
