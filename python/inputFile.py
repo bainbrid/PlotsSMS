@@ -156,6 +156,27 @@ class inputFile():
                     maxDelta = x-y
                     maxHist = histogram
                     maxIndexFinal = index
+        if "T2cc" in name:
+            # WTF ... sausages in, sausages out ... 
+            for histogram in histograms:
+                # Shift all entries to 1:nbins
+                nbins = histogram.GetN()
+                for i in reversed(range(1,nbins+1)) :
+                    x,y = rt.Double(),rt.Double()
+                    histogram.GetPoint(i-1,x,y)
+                    histogram.SetPoint(i,x,y)
+                # Get 1 and nbins entries 
+                x1,y1 = rt.Double(),rt.Double()
+                histogram.GetPoint(1,x1,y1)
+                x2,y2 = rt.Double(),rt.Double()
+                histogram.GetPoint(nbins,x2,y2)
+                # Set 0 and nbins+1
+                if y1 > y2 :
+                    histogram.SetPoint(0,150.,140.)
+                    histogram.SetPoint(nbins+1,80.,0.)
+                else :
+                    histogram.SetPoint(0,80.,0.)
+                    histogram.SetPoint(nbins+1,150.,140.)
         if "T5ttttDM175" in name:
             histograms[maxIndexFinal] = self.removePoints(histograms[maxIndexFinal]) 
         if minI > 0:
