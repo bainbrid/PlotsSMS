@@ -144,7 +144,7 @@ class ContPlotCollection():
         iM = 0
 
         for iM,model in enumerate(self.uniqueModelList):
-            yoffset = -(yRange/self.labelOffset)*int(iM%self.nmodels)
+            yoffset = -(yRange/self.labelOffset)*int(iM%self.nmodels if int(iM/self.nmodels) == 0 else (iM+1)%self.nmodels)
             xoffset = int(iM/self.nmodels)*0.5*xRange
 
             LObs = rt.TGraph(2)
@@ -185,6 +185,7 @@ class ContPlotCollection():
             LObsList.append(LObs)
             LExpList.append(LExp)
 
+        xoffset = 0.
         yoffset = -(-1.6)*(yRange/self.labelOffset)
         LExp= rt.TGraph(2)
         LExp.SetName("LExp")
@@ -196,7 +197,6 @@ class ContPlotCollection():
         LExp.SetPoint(0,self.Xmin+74*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
         LExp.SetPoint(1,self.Xmin+81*xRange/100+xoffset, self.Ymax-1.35*yRange/10+yoffset)
 
-        #textExp = rt.TLatex(0.15,0.90, "Expected")
         textExp = rt.TLatex(self.Xmin+82*xRange/100+xoffset, self.Ymax-1.50*yRange/10+yoffset, "Expected")
         textExp.SetTextFont(42)
         textExp.SetTextSize(0.030)
