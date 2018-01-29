@@ -25,7 +25,7 @@ class ContPlotCollection():
 
         ylabelDict = {
             "gluino":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
-            "squark":"m#kern[0.1]{_{#lower[-0.12]{#tilde{b} / #tilde{t} / #tilde{q}}}} [GeV]",
+            "squark":"m#kern[0.1]{_{#lower[-0.12]{#tilde{b}_{1} / #tilde{t}_{1} / #tilde{q}}}} [GeV]",
             "split":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
             "splitAll":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
             "gluinoAll":"m#kern[0.1]{_{#lower[-0.12]{#tilde{g}}}} [GeV]",
@@ -291,17 +291,17 @@ class ContPlotCollection():
             textMW.SetNDC()
             textMW.SetTextAlign(13)
             textMW.SetTextFont(42)
-            textMW.SetTextSize(0.024)
+            textMW.SetTextSize(0.03)
             textMW.SetTextAngle(angleT)
             textMW.Draw()
             self.c.textMW = textMW
             xT = 0.19
             yT = 0.58
-            textMWop2 = rt.TLatex(xT,yT,"#Deltam_{1} #equiv m#kern[0.2]{_{ #tilde{t}}} - m_{#chi^{0}_{1}} = m_{W}")
+            textMWop2 = rt.TLatex(xT,yT,"#Deltam_{1} #equiv m#kern[0.2]{_{ #tilde{t}_{1}}} - m_{#chi^{0}_{1}} = m_{W}")
             textMWop2.SetNDC()
             textMWop2.SetTextAlign(13)
             textMWop2.SetTextFont(42)
-            textMWop2.SetTextSize(0.024)
+            textMWop2.SetTextSize(0.03)
             textMWop2.Draw()
             self.c.textMWop2 = textMWop2
 
@@ -323,18 +323,18 @@ class ContPlotCollection():
             textMTop.SetNDC()
             textMTop.SetTextAlign(13)
             textMTop.SetTextFont(42)
-            textMTop.SetTextSize(0.024)
+            textMTop.SetTextSize(0.03)
             textMTop.SetTextAngle(angleT)
             textMTop.Draw()
             self.c.textMTop = textMTop
 
             xT = 0.19
             yT = 0.54
-            textMTop2 = rt.TLatex(xT,yT,"#Deltam_{2} #equiv m#kern[0.2]{_{ #tilde{t}}} - m_{#chi^{0}_{1}} = m_{ t}")
+            textMTop2 = rt.TLatex(xT,yT,"#Deltam_{2} #equiv m#kern[0.2]{_{ #tilde{t}_{1}}} - m_{#chi^{0}_{1}} = m_{ t}")
             textMTop2.SetNDC()
             textMTop2.SetTextAlign(13)
             textMTop2.SetTextFont(42)
-            textMTop2.SetTextSize(0.024)
+            textMTop2.SetTextSize(0.03)
             textMTop2.Draw()
             self.c.textMTop2 = textMTop2
 
@@ -506,15 +506,15 @@ if __name__ == '__main__':
         ]
 
     makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=False)
-    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=False)
-    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=False)
-    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=False)
-    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=False)
-
-    makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=True)
-    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=True)
-    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=True)
-    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=True)
-    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=True)
-
-    makeSummary("squarkZoom",filenameTemplate,squarkModelNames,"squark",transpose=True)
+#    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=False)
+#    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=False)
+#    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=False)
+#    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=False)
+#
+#    makeSummary("squark",filenameTemplate,squarkModelNames,"squark",transpose=True)
+#    makeSummary("gluino",filenameTemplate,gluinoModelNames,"gluino",transpose=True)
+#    makeSummary("split",filenameTemplate,splitModelNames,"split",transpose=True)
+#    makeSummary("gluinoAll",filenameTemplate,gluinoAllModelNames,"gluinoAll",transpose=True)
+#    makeSummary("splitAll",filenameTemplate,splitAllModelNames,"splitAll",transpose=True)
+#
+#    makeSummary("squarkZoom",filenameTemplate,squarkModelNames,"squark",transpose=True)
