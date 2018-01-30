@@ -41,6 +41,8 @@ class smsPlotXSEC(smsPlotABS):
         rt.gStyle.SetNumberContours(NCont)
         
         self.c.cd()
+        self.histo.GetXaxis().SetRangeUser(self.model.Xmin, self.model.Xmax)#@@2
+        self.histo.GetYaxis().SetRangeUser(self.model.Ymin, self.model.Ymax)#@@2
         self.histo.Draw("colz")
         
         rt.gPad.Update()
@@ -66,7 +68,7 @@ class smsPlotXSEC(smsPlotABS):
         self.emptyHisto.GetXaxis().SetRangeUser(self.model.Xmin, self.model.Xmax)
         self.emptyHisto.GetYaxis().SetRangeUser(self.model.Ymin, self.model.Ymax)
         # self.emptyHisto.GetZaxis().SetTitle("")
-        self.emptyHisto.Draw()
+        #self.emptyHisto.Draw()#@@1
         self.histo.Draw("COLZSAME")
         if self.model.diagOn:
             self.DrawDiagonal()

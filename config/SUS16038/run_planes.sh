@@ -1,6 +1,8 @@
 mkdir plots/
 cd ../..
 
+python python/makeSMSplots.py config/SUS16038/T2tt_SUS16038_turd.cfg T2tt
+
 # Vanilla SUSY 
 #python python/makeSMSplots.py config/SUS16038/T1qqqq_SUS16038.cfg T1qqqq
 #python python/makeSMSplots.py config/SUS16038/T1bbbb_SUS16038.cfg T1bbbb
@@ -24,7 +26,7 @@ cd ../..
 #python python/makeSMSplots.py config/SUS16038/T1qqqqLLStable_SUS16038.cfg T1qqqqLLStable
 
 # Summary plots
-python python/makeSummarySMSplots.py
+#python python/makeSummarySMSplots.py
 
 mv *.pdf config/SUS16038/plots/
 cd -
